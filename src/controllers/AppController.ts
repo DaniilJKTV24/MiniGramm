@@ -36,13 +36,13 @@ export class AppController {
     const demo: Post[] = [
       new Post(
         this.nextId++,
-        'https://unsplash.com/photos/a-decorated-christmas-tree-with-ornaments-on-it-gCooCqY0t1E',
+        'https://plus.unsplash.com/premium_photo-1700838996339-de3bd9663344?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'Decorated christmas tree',
         { like: 8, wow: 2, laugh: 1 }
       ),
       new Post(
         this.nextId++,
-        'https://unsplash.com/photos/people-walking-on-street-during-daytime-LTAjlcRQcOY',
+        'https://images.unsplash.com/photo-1619911112608-54e938faef00?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         'Neige à Paris',
         { like: 5, wow: 1, laugh: 0 }
       )

@@ -1,29 +1,15 @@
-/**
- * Defines available reaction types for a post.
- */
-export type ReactionType = "like" | "wow" | "laugh";
+import { AppView } from './views/AppView.js';
+import { AppController } from './controllers/AppController.js';
 
-/**
- * Represents a social media post with an image, caption,
- * and reaction counters. Includes logic to safely increment reactions.
- */
-export class Post {
-  constructor(
-    public id: number,
-    public imageUrl: string,
-    public caption: string,
-    public reactions: Record<ReactionType, number> = {
-      like: 0,
-      wow: 0,
-      laugh: 0
-    }
-  ) {}
+// Get root container where the application will be rendered
+const root = document.getElementById('app');
 
-  /**
-   * Increments the counter of the specified reaction type.
-   * @param type - The reaction type to increment.
-   */
-  addReaction(type: ReactionType): void {
-    this.reactions[type] = (this.reactions[type] ?? 0) + 1;
-  }
+// Initialize the application only if the root element exists
+if (root) {
+  // Create the main view and controller
+  const view = new AppView(root);
+  const controller = new AppController(view);
+
+  // Start the application (sets up event listeners, renders UI, etc.)
+  controller.init();
 }

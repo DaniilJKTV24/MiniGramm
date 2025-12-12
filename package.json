@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc -w --project tsconfig.json"
   },
   "keywords": [],
   "author": "",

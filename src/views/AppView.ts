@@ -1,7 +1,7 @@
 import { Post, ReactionType } from '../models/Post.js';
 
 type CreateHandler = (imageUrl: string, caption: string) => void;
-type ReactHandler = (postId: number, reaction: ReactionType) => void;
+type ReactHandler = (postId: string, reaction: ReactionType) => void;
 
 /**
  * AppView handles all DOM manipulation and user interaction.
@@ -139,7 +139,7 @@ export class AppView {
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const reaction = (button as HTMLElement).dataset.reaction as ReactionType;
-        const postId = Number((button as HTMLElement).dataset.postId);
+        const postId = (button as HTMLElement).dataset.postId as string;
         this.reactHandler?.(postId, reaction);
       });
     });

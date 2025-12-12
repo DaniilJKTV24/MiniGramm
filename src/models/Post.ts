@@ -9,7 +9,7 @@ export type ReactionType = "like" | "wow" | "laugh";
  */
 export class Post {
   constructor(
-    public id: number,
+    public id: string, // accept MongoDB ObjectId (string)
     public imageUrl: string,
     public caption: string,
     public reactions: Record<ReactionType, number> = {

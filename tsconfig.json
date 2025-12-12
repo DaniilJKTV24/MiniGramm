@@ -6,7 +6,8 @@
     "outDir": "public/js",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "types": ["node"]
   },
   "include": ["src"]
 }

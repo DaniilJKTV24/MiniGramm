@@ -1,11 +1,5 @@
-// src/models/PostModel.ts
-import mongoose, { Schema, Document } from "mongoose";
-
-/**
- * ReactionType defines the allowed reaction strings.
- * This mirrors the ReactionType union in Post.ts.
- */
-export type ReactionType = "like" | "wow" | "laugh";
+import mongoose, { Schema } from "mongoose";
+import { ReactionType } from "../../shared/types";
 
 /**
  * IPost interface describes the shape of a Post document

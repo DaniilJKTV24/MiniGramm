@@ -22,6 +22,11 @@ function getMongoUri(): string {
  */
 export async function connectDB(): Promise<void> {
   const uri = getMongoUri();
+
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`[db] Connecting to MongoDB at ${uri}`);
+  }
+
   await mongoose.connect(uri);
   // console.log(`[db] Connected: ${uri}`);
 

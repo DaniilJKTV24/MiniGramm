@@ -1,7 +1,4 @@
-/**
- * Defines available reaction types for a post.
- */
-export type ReactionType = "like" | "wow" | "laugh";
+import { ReactionType } from '../../shared/types';
 
 /**
  * Represents a social media post with an image, caption,

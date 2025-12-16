@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ReactionType } from "../../shared/types";
+import { ReactionType } from "../../shared/types.js";
 
 /**
  * IPost interface describes the shape of a Post document

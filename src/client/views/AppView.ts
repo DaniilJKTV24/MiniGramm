@@ -1,5 +1,5 @@
-import { Post } from '../models/Post';
-import { ReactionType } from '../../shared/types';
+import { Post } from '../models/Post.js';
+import { ReactionType } from '../../shared/types.js';
 
 type CreateHandler = (imageUrl: string, caption: string) => void;
 type ReactHandler = (postId: string, reaction: ReactionType) => void;

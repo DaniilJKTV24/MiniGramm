@@ -1,4 +1,4 @@
-import { ReactionType } from '../../shared/types';
+import { ReactionType } from '../../shared/types.js';
 
 /**
  * Represents a social media post with an image, caption,

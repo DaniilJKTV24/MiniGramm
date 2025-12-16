@@ -1,6 +1,6 @@
-import { AppView } from '../views/AppView';
-import { Post } from '../models/Post';
-import { PostDTO, ReactionType } from '../../shared/types';
+import { AppView } from '../views/AppView.js';
+import { Post } from '../models/Post.js';
+import { PostDTO, ReactionType } from '../../shared/types.js';
 
 /**
  * AppController coordinates interactions between the View and the Model.

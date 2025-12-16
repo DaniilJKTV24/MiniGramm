@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./database";
-import { PostModel } from "./models/PostModel";
-import { ReactionType, PostDTO } from "../shared/types";
+import { connectDB } from "./database.js";
+import { PostModel } from "./models/PostModel.js";
+import { ReactionType, PostDTO } from "../shared/types.js";
 
 const app = express();
 const PORT = 3000;

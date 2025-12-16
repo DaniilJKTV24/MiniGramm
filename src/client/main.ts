@@ -1,5 +1,5 @@
-import { AppView } from './views/AppView';
-import { AppController } from './controllers/AppController';
+import { AppView } from './views/AppView.js';
+import { AppController } from './controllers/AppController.js';
 
 // Get root container where the application will be rendered
 const root = document.getElementById('app');

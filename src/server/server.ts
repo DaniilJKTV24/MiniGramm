@@ -1,5 +1,6 @@
 import express from "express";
-import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { connectDB } from "./database.js";
 import { PostModel } from "./models/PostModel.js";
 import { ReactionType, PostDTO } from "../shared/types.js";
@@ -8,8 +9,12 @@ const app = express();
 const PORT = 3000;
 
 // Middlewares
-app.use(cors()); // Allow requests from Live Server / browser
 app.use(express.json()); // Parse JSON bodies
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "../../public")));
 
 async function start() {
   await connectDB();

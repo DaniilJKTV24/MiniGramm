@@ -8,5 +8,5 @@
     "esModuleInterop": true,
     "moduleResolution": "bundler"
   },
-  "include": ["src/client"]
+  "include": ["src/client", "src/shared"]
 }

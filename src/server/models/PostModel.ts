@@ -11,7 +11,7 @@ export type ReactionType = "like" | "wow" | "laugh";
  * IPost interface describes the shape of a Post document
  * as it will be stored in MongoDB.
  */
-export interface IPost extends Document {
+export interface IPost {
   imageUrl: string;
   caption: string;
   reactions: Record<ReactionType, number>;

@@ -23,7 +23,7 @@ function getMongoUri(): string {
 export async function connectDB(): Promise<void> {
   const uri = getMongoUri();
   await mongoose.connect(uri);
-  console.log(`[db] Connected: ${uri}`);
+  // console.log(`[db] Connected: ${uri}`);
 
   // Connection event hooks
   mongoose.connection.on("connected", () => console.log("[db] Mongoose connected"));

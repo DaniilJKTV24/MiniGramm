@@ -24,7 +24,7 @@ export class AppView {
         <h1>MiniGramm</h1>
         <form class="post-form">
           <label>Image URL
-            <input name="imageUrl" type="url" placeholde"https://..." required />
+            <input name="imageUrl" type="url" placeholder="https://..." required />
           </label>
           <label>Caption
             <input name="caption" type="text" placeholder="Type something" maxlength="120" required />

@@ -6,8 +6,7 @@
     "outDir": "public/js",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "bundler",
-    "types": ["node"]
+    "moduleResolution": "bundler"
   },
-  "include": ["src"]
+  "include": ["src/client"]
 }

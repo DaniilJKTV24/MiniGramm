@@ -1,6 +1,6 @@
 import { AppView } from '../views/AppView.js';
 import { Post, ReactionType } from '../models/Post.js';
-import { PostModel } from '../models/PostModel.js';
+import { PostModel } from '../../server/models/PostModel.js';
 
 /**
  * AppController coordinates interactions between the View and the Model.
@@ -10,7 +10,6 @@ import { PostModel } from '../models/PostModel.js';
 export class AppController {
   // // Internal list of posts (in-memory “database”)
   // private posts: Post[] = [];
-
   // // Auto-incrementing ID for new posts
   // private nextId = 1;
 
@@ -82,19 +81,19 @@ export class AppController {
 
     const doc = await PostModel.create({ imageUrl, caption });
 
-    const post = new Post(
-      doc._id.toString(),
-      doc.imageUrl,
-      doc.caption,
-      doc.reactions
-    );
+    // const post = new Post(
+    //   doc._id.toString(),
+    //   doc.imageUrl,
+    //   doc.caption,
+    //   doc.reactions
+    // );
 
-    await this.loadPosts(); // Refresh UI grom DB
+    await this.loadPosts(); // Refresh UI from DB
 
     // // Add new post at the top of the feed
     // this.posts = [post, ...this.posts];
-
     // this.view.render(this.posts);
+    
     this.view.resetForm();
   };
 
@@ -113,9 +112,13 @@ export class AppController {
     // found.addReaction(reaction);
     // this.view.render(this.posts);
 
+    await PostModel.updateOne(
+      { _id: postId },
+      { $inc: { [`reactions.${reaction}`]: 1 } }
+    );
     //increment reaction in DB
-    doc.reactions[reaction] = (doc.reactions[reaction] ?? 0) + 1;
-    await doc.save();
+    // doc.reactions[reaction] = (doc.reactions[reaction] ?? 0) + 1;
+    // await doc.save();
 
     await this.loadPosts(); // Refresh UI from DB
   };

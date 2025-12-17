@@ -1,9 +1,13 @@
+import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { connectDB } from "./database.js";
 import { PostModel } from "./models/PostModel.js";
 import { ReactionType, PostDTO } from "../shared/types.js";
+
+// Load environment variables for server configuration
+dotenv.config();
 
 /**
  * Express application instance.
@@ -14,7 +18,7 @@ const app = express();
 
 // Load the port from environment variables
 // Falls back to 3000 if not specified (useful for local dev)
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // --- Global middlewares ---
 

@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-// Load environment variables for server configuration
-dotenv.config();
 
 // Fallback URI for local development when no environment variable is set
 const DEFAULT_URI = "mongodb://localhost:27017/minigramm";

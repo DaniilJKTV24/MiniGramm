@@ -2,8 +2,11 @@ import mongoose, { Schema } from "mongoose";
 import { ReactionType } from "../../shared/types.js";
 
 /**
- * IPost interface describes the shape of a Post document
- * as it will be stored in MongoDB.
+ * IPost defines the structure of a Post as it exists
+ * on the server and is stored in the database.
+ *
+ * This interface represents the authoritative data model
+ * used by the backend, not a client-side view model.
  */
 export interface IPost {
   imageUrl: string;
@@ -12,9 +15,12 @@ export interface IPost {
 }
 
 /**
- * PostSchema defines the MongoDB schema for posts.
- * It matches the Post class fields but is used by Mongoose
- * to persist and query documents in the database.
+ * PostSchema describes how Post documents are stored
+ * and validated in MongoDB.
+ *
+ * It is used exclusively on the server by Mongoose to
+ * enforce schema rules, apply defaults, and enable
+ * database queries and updates.
  */
 const PostSchema = new Schema<IPost>({
   imageUrl: { type: String, required: true },
@@ -27,7 +33,10 @@ const PostSchema = new Schema<IPost>({
 });
 
 /**
- * PostModel is the Mongoose model bound to the "posts" collection.
- * Use this for database operations (find, save, update).
+ * PostModel is the server-side Mongoose model connected
+ * to the "posts" collection in MongoDB.
+ *
+ * Controllers and services use this model to perform
+ * persistent CRUD operations in response to client requests.
  */
 export const PostModel = mongoose.model<IPost>("Post", PostSchema);

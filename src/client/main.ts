@@ -1,17 +1,26 @@
 import { AppView } from './views/AppView.js';
 import { AppController } from './controllers/AppController.js';
 
-// Get root container where the application will be rendered
+// Locate the root DOM element where the client application
+// will mount and render its UI
 const root = document.getElementById('app');
 
-// Initialize the application only if the root element exists
+// Bootstrap the client application only if the root element exists
 if (root) {
   (async () => {
-  // Create the main view and controller
-  const view = new AppView(root);
-  const controller = new AppController(view);
+    // Instantiate the view (UI + DOM interaction layer)
+    const view = new AppView(root);
 
-  // Start the application (sets up event listeners, renders UI, etc.)
-  controller.init();
+    // Instantiate the controller, which coordinates:
+    // - user interactions from the view
+    // - API communication with the server
+    // - updating the view with server-provided data
+    const controller = new AppController(view);
+
+    // Initialize the application:
+    // - fetch initial data from the server
+    // - bind view event handlers
+    // - render the initial UI state
+    controller.init();
   })();
 }

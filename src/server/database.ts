@@ -1,24 +1,30 @@
-// src/database.ts
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-// Load environment variables from .env file
+// Load environment variables for server configuration
 dotenv.config();
 
-// Default URI for local development if no env var is provided
+// Fallback URI for local development when no environment variable is set
 const DEFAULT_URI = "mongodb://localhost:27017/minigramm";
 
 /**
- * Returns the MongoDB URI.
- * Prefers the MONGODB_URI environment variable, falls back to DEFAULT_URI.
+ * Resolves the MongoDB connection string for the server.
+ *
+ * The server prefers the MONGODB_URI environment variable
+ * (used in staging/production) and falls back to a local
+ * development URI if none is provided.
  */
 function getMongoUri(): string {
   return process.env.MONGODB_URI || DEFAULT_URI;
 }
 
 /**
- * Establishes a connection to MongoDB using Mongoose.
- * Also sets up helpful event listeners and graceful shutdown.
+ * Initializes the server's connection to MongoDB using Mongoose.
+ *
+ * This function is typically called once during server startup.
+ * It establishes the database connection, registers connection
+ * lifecycle event listeners, and ensures graceful shutdown
+ * when the server process is terminated.
  */
 export async function connectDB(): Promise<void> {
   const uri = getMongoUri();
@@ -28,14 +34,13 @@ export async function connectDB(): Promise<void> {
   }
 
   await mongoose.connect(uri);
-  // console.log(`[db] Connected: ${uri}`);
 
-  // Connection event hooks
+  // Mongoose connection lifecycle events (server-side only)
   mongoose.connection.on("connected", () => console.log("[db] Mongoose connected"));
   mongoose.connection.on("error", (err) => console.error("[db] Mongoose error:", err));
   mongoose.connection.on("disconnected", () => console.log("[db] Mongoose disconnected"));
 
-  // Graceful shutdown on Ctrl+C
+  // Graceful shutdown on process termination (e.g. Ctrl+C, Docker stop)
   process.on("SIGINT", async () => {
     await mongoose.connection.close();
     console.log("[db] Mongoose connection closed (SIGINT)");
@@ -44,7 +49,10 @@ export async function connectDB(): Promise<void> {
 }
 
 /**
- * Closes the MongoDB connection manually.
+ * Explicitly closes the MongoDB connection.
+ *
+ * Useful for controlled shutdowns, background jobs,
+ * or automated testing environments.
  */
 export async function disconnectDB(): Promise<void> {
   await mongoose.connection.close();

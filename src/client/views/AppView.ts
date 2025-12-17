@@ -5,21 +5,29 @@ type CreateHandler = (imageUrl: string, caption: string) => void;
 type ReactHandler = (postId: string, reaction: ReactionType) => void;
 
 /**
- * AppView handles all DOM manipulation and user interaction.
- * It displays posts, manages form input, renders reaction buttons,
- * and sends user actions upward via bound handlers.
+ * AppView is responsible for all client-side UI concerns.
+ *
+ * It renders server-provided post data into the DOM, captures user input
+ * (creating posts and reacting to posts), and forwards those interactions
+ * upward to the controller layer.
+ *
+ * AppView does NOT manage application state or perform network requests.
+ * Instead, it delegates all business logic and server communication
+ * to handlers supplied by the controller.
  */
 export class AppView {
   private form: HTMLFormElement;
   private list: HTMLElement;
   private message: HTMLElement;
 
-  // Handlers provided by the controller
+  // Callback handlers injected by the controller.
+  // These typically trigger API requests to the server.
   private createHandler?: CreateHandler;
   private reactHandler?: ReactHandler;
 
   constructor(private root: HTMLElement) {
-    // Build basic UI layout
+    // Construct the static client-side UI layout.
+    // Dynamic content (posts, counts, messages) is injected later.
     this.root.innerHTML = `
       <section class="composer">
         <h1>MiniGramm</h1>
@@ -37,12 +45,14 @@ export class AppView {
       <section class="feed"></section>
     `;
 
-    // Cache DOM references
+    // Cache DOM references for later updates
     this.form = this.root.querySelector('.post-form') as HTMLFormElement;
     this.list = this.root.querySelector('.feed') as HTMLElement;
     this.message = this.root.querySelector('.message') as HTMLElement;
 
-    // Form submission triggers create handler
+    // Intercept form submission and forward sanitized user input
+    // to the controller, which will handle validation and
+    // server-side persistence.
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!this.createHandler) return;
@@ -56,21 +66,26 @@ export class AppView {
   }
 
   /**
-   * Binds the create-post handler supplied by the controller.
+   * Registers a handler for creating a new post.
+   * The controller typically uses this to send a POST request
+   * to the server and then refresh the feed.
    */
   bindCreate(handler: CreateHandler): void {
     this.createHandler = handler;
   }
 
   /**
-   * Binds the reaction handler supplied by the controller.
+   * Registers a handler for reacting to a post.
+   * The controller typically forwards this interaction
+   * to the server and updates the UI with the latest data.
    */
   bindReact(handler: ReactHandler): void {
     this.reactHandler = handler;
   }
 
   /**
-   * Displays a visible message (typically validation or error).
+   * Displays a user-facing status or error message.
+   * Commonly used to surface validation or server errors.
    */
   showMessage(text: string): void {
     this.message.textContent = text;
@@ -78,7 +93,7 @@ export class AppView {
   }
 
   /**
-   * Clears the currently displayed message.
+   * Clears any currently displayed status or error message.
    */
   clearMessage(): void {
     this.message.textContent = '';
@@ -86,7 +101,8 @@ export class AppView {
   }
 
   /**
-   * Resets the form and focuses the first input field.
+   * Resets the post creation form after a successful
+   * server-side create operation.
    */
   resetForm(): void {
     this.form.reset();
@@ -95,8 +111,11 @@ export class AppView {
   }
 
   /**
-   * Renders the full list of posts.
-   * If list is empty, displays an empty-state message.
+   * Renders the complete post feed using data supplied
+   * by the controller (typically fetched from the server).
+   *
+   * This method performs a full re-render and does not
+   * retain local state.
    */
   render(posts: Post[]): void {
     this.list.innerHTML = '';
@@ -115,8 +134,11 @@ export class AppView {
   }
 
   /**
-   * Creates a DOM element for a single post card.
-   * Includes image, caption, and reaction buttons.
+   * Creates a DOM representation of a single post.
+   *
+   * Reaction buttons emit events upward but do not mutate
+   * local state directly; all updates are driven by
+   * server-confirmed data.
    */
   private createPostElement(post: Post): HTMLElement {
     const container = document.createElement('article');
@@ -135,7 +157,9 @@ export class AppView {
       </div>
     `;
 
-    // Attach click handlers to each reaction button
+    // Bind reaction buttons to the controller handler.
+    // The controller is responsible for syncing the reaction
+    // with the server and triggering a re-render.
     const buttons = container.querySelectorAll('[data-reaction]');
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
@@ -149,7 +173,8 @@ export class AppView {
   }
 
   /**
-   * Helper to generate HTML for a reaction button.
+   * Generates the markup for a reaction button.
+   * The displayed count reflects server-sourced state.
    */
   private reactionButton(
     post: Post,
